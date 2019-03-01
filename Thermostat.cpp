@@ -7,8 +7,6 @@
 
 
 Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin, byte cooler_fan_heat_pin, long cooling_interval) {
-    Serial.begin(9600);
-
     pinMode(cooler_fan_cold_pin, OUTPUT);
     pinMode(cooler_fan_heat_pin, OUTPUT);
     pinMode(cooler_pin, OUTPUT);
@@ -57,8 +55,6 @@ void Thermostat::_heating(bool state) {
 
 void Thermostat::set_t(int temperature, Thermistor thermistor) {
     float current_t = thermistor.get_t();
-
-    Serial.println(current_t);
 
     if (current_t > temperature) {
         Serial.println("COOLING BLOCK ON");
