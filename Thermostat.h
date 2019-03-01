@@ -1,0 +1,41 @@
+//
+// Created by navch on 01.03.2019.
+//
+
+#ifndef TS_THERMOSTAT_H
+#define TS_THERMOSTAT_H
+
+#include "Arduino.h"
+#include "Thermistor.h"
+
+#define ON 1
+#define OFF 0
+#define OFF_STATE 0
+#define HEATING_STATE 1
+#define COOLING_STATE 2
+
+
+class Thermostat {
+    public:
+        Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin,
+                   byte cooler_fan_heat_pin, long cooling_interval=60000);
+
+        void set_t(int temperature, Thermistor thermistor);
+
+    private:
+        byte _heater_pin, _cooler_pin, _cooler_fan_cold_pin, _cooler_fan_heat_pin;
+
+        // STATE may be 0 or 1 or 2
+        // 0 - Off, 1 - heating, 2 - cooling
+        byte _common_state;
+
+        void _cooling(bool state = OFF);
+        void _heating(bool state = OFF);
+
+        long _cooling_interval;
+        unsigned long _previous_millis;
+
+};
+
+
+#endif //TS_THERMOSTAT_H
