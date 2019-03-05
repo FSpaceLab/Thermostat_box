@@ -18,14 +18,17 @@
 /**************************************************/
 
 
-/************ THERMISTOR CONFIGURATION ************/
+/************ THERMOSTAT CONFIGURATION ************/
 #define COOLER_FAN_COLD_PIN 4
 #define COOLER_FAN_HEAT_PIN 3
 #define COOLER_PIN 6
 #define HEATER_PIN 7
 
-#define COOLING_INTERVAL 20000
+#define COOLING_INTERVAL 5000
 #define HEATING_INTERVAL 5000
+
+#define MAX_TEMP 60
+#define MIN_TEMP 5
 /**************************************************/
 
 

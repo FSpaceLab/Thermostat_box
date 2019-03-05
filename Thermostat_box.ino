@@ -16,7 +16,7 @@ String current_t_text = "t: ";
 String set_t_text = " | set t: ";
 
 
-byte SET_T = 33;
+byte SET_T = 40;
 
 
 void draw_main_page(float temp, int set_temp) {
