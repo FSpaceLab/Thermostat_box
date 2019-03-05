@@ -24,7 +24,8 @@
 #define COOLER_PIN 6
 #define HEATER_PIN 7
 
-#define COOLING_INTERVAL 5000
+#define COOLING_INTERVAL 20000
+#define HEATING_INTERVAL 5000
 /**************************************************/
 
 

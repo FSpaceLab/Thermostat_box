@@ -18,21 +18,20 @@
 class Thermostat {
     public:
         Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin,
-                   byte cooler_fan_heat_pin, long cooling_interval=60000);
+                   byte cooler_fan_heat_pin, long cooling_interval=60000, long heating_interval=15000);
 
         void set_t(int temperature, Thermistor thermistor);
 
     private:
         byte _heater_pin, _cooler_pin, _cooler_fan_cold_pin, _cooler_fan_heat_pin;
 
-        // STATE may be 0 or 1 or 2
-        // 0 - Off, 1 - heating, 2 - cooling
-        byte _common_state;
+        // STATE may be 0 (Off), 1 (heating), 2 (cooling)
+        byte _current_state;
 
         void _cooling(bool state = OFF);
         void _heating(bool state = OFF);
 
-        long _cooling_interval;
+        long _cooling_interval, _heating_interval;
         unsigned long _previous_millis;
 
 };

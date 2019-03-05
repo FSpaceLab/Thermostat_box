@@ -6,7 +6,8 @@
 #include "Thermostat.h"
 
 
-Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin, byte cooler_fan_heat_pin, long cooling_interval) {
+Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin, byte cooler_fan_heat_pin,
+                       long cooling_interval, long heating_interval) {
     pinMode(cooler_fan_cold_pin, OUTPUT);
     pinMode(cooler_fan_heat_pin, OUTPUT);
     pinMode(cooler_pin, OUTPUT);
@@ -17,9 +18,10 @@ Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pi
     _cooler_fan_cold_pin = cooler_fan_cold_pin;
     _cooler_fan_heat_pin = cooler_fan_heat_pin;
 
-    byte _common_state = 0;
+    byte _current_state = 0;
 
     _cooling_interval = cooling_interval;
+    _heating_interval = heating_interval;
     _previous_millis = 0;
 }
 
@@ -27,19 +29,20 @@ Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pi
 void Thermostat::_cooling(bool state) {
     unsigned long current_millis = millis();
 
+    // Мінімальний час роботи охолоджувача = cooling_interval
     if (current_millis - _previous_millis >= _cooling_interval) {
-
         _previous_millis = current_millis;
 
-        if (state && _common_state != COOLING_STATE ) {
-            _common_state = COOLING_STATE;
+        // Перевірка та встановлення станів
+        if (state && _current_state != COOLING_STATE ) {
+            _current_state = COOLING_STATE;
 
             digitalWrite(_cooler_fan_cold_pin, HIGH);
             digitalWrite(_cooler_fan_heat_pin, HIGH);
             digitalWrite(_cooler_pin, HIGH);
         }
-        else if (!state && _common_state == COOLING_STATE){
-            _common_state = OFF_STATE;
+        else if (!state && _current_state == COOLING_STATE){
+            _current_state = OFF_STATE;
 
             digitalWrite(_cooler_fan_cold_pin, LOW);
             digitalWrite(_cooler_fan_heat_pin, LOW);
@@ -49,24 +52,53 @@ void Thermostat::_cooling(bool state) {
 }
 
 void Thermostat::_heating(bool state) {
-    //TODO
+    unsigned long current_millis = millis();
+
+    // Мінімальний час роботи нагрівача = heating_interval
+    if (current_millis - _previous_millis >= _heating_interval ) {
+        _previous_millis = current_millis;
+
+        // Перевірка та встановлення станів
+        if (state && _current_state != HEATING_STATE) {
+            _current_state = HEATING_STATE;
+
+            digitalWrite(_heater_pin, HIGH);
+        }
+        else if (!state && _current_state == HEATING_STATE){
+            _current_state = OFF_STATE;
+
+            digitalWrite(_heater_pin, LOW);
+        }
+    }
 }
 
 
 void Thermostat::set_t(int temperature, Thermistor thermistor) {
-    float current_t = thermistor.get_t();
+    int current_t = (int) thermistor.get_t();
 
+    // Ввімкнення охолодження
     if (current_t > temperature) {
-        Serial.println("COOLING BLOCK ON");
-        _cooling(ON);
+        if (_current_state != HEATING_STATE)
+            _cooling(ON);
+        else
+            _heating(OFF);
     }
 
-//    else if (current_t < temperature) {
-//        // TODO: heating
-//    }
+    // Ввімкнення нагріву
+    else if (current_t < temperature ) {
+        if (_current_state != COOLING_STATE)
+            _heating(ON);
+        else
+            _cooling(OFF);
 
+    }
+
+    // Вимкнення нагріву/охолодження
     else {
-        Serial.println("COOLING BLOCK OFF");
-        _cooling(OFF);
+        if (_current_state != OFF_STATE)
+            _heating(OFF);
+
+        else if (_current_state != OFF_STATE)
+            _cooling(OFF);
     }
 }
