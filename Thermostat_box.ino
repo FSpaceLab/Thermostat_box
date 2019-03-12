@@ -16,10 +16,11 @@ byte SET_T = 60;
 void setup()
 {
     Serial.begin(9600);
+    thermostat.set_thermistor(thermistor);
 }
 
 void loop()
 {
-    thermostat.set_t(SET_T, thermistor);
+    thermostat.set_t(SET_T);
     disp.draw_main_page(thermistor.get_t(), SET_T);
 }
