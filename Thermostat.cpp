@@ -26,6 +26,11 @@ Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pi
 }
 
 
+void Thermostat::set_thermistor(Thermistor thermistor) {
+    _thermistor = &thermistor;
+}
+
+
 void Thermostat::_cooling(bool state) {
     unsigned long current_millis = millis();
 
@@ -73,8 +78,8 @@ void Thermostat::_heating(bool state) {
 }
 
 
-void Thermostat::set_t(int temperature, Thermistor thermistor) {
-    int current_t = (int) thermistor.get_t();
+void Thermostat::set_t(int temperature) {
+    int current_t = (int) _thermistor->get_t();
 
     // Ввімкнення охолодження
     if (current_t > temperature) {

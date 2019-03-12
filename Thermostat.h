@@ -20,7 +20,8 @@ class Thermostat {
         Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin,
                    byte cooler_fan_heat_pin, long cooling_interval=60000, long heating_interval=15000);
 
-        void set_t(int temperature, Thermistor thermistor);
+        void set_t(int temperature);
+        void set_thermistor(Thermistor thermistor);
 
     private:
         byte _heater_pin, _cooler_pin, _cooler_fan_cold_pin, _cooler_fan_heat_pin;
@@ -33,6 +34,7 @@ class Thermostat {
 
         long _cooling_interval, _heating_interval;
         unsigned long _previous_millis;
+        Thermistor *_thermistor;
 
 };
 
