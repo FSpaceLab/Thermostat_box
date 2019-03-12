@@ -1,5 +1,5 @@
 //
-// Created by navch on 01.03.2019.
+// Created by B. Korzhak on 01.03.2019.
 //
 
 #ifndef TS_CONFIGURATION_H
@@ -31,5 +31,11 @@
 #define MIN_TEMP 5
 /**************************************************/
 
+
+/************** DISPLAY CONFIGURATION *************/
+#define SCK_DISPLAY 13
+#define MOSI_DISPLAY 11
+#define CS_DISPLAY 10
+/**************************************************/
 
 #endif //TS_CONFIGURATION_H

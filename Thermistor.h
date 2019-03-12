@@ -1,5 +1,5 @@
 //
-// Created by navch on 01.03.2019.
+// Created by B. Korzhak on 01.03.2019.
 //
 
 // B 3950 // B-коэффициент

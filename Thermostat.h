@@ -1,5 +1,5 @@
 //
-// Created by navch on 01.03.2019.
+// Created by B. Korzhak on 01.03.2019.
 //
 
 #ifndef TS_THERMOSTAT_H

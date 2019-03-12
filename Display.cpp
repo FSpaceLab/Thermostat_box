@@ -1,24 +1,18 @@
-//
-// Created by navch on 28.02.2019.
-//
-
-
-#ifndef THERMISTOR_DISPLAY_H
-#define THERMISTOR_DISPLAY_H
-
 #include "Arduino.h"
+#include "Display.h"
 #include "U8glib.h"
 
-U8GLIB_ST7920_128X64_4X u8g(13, 11, 10);
 
-String current_t_text = "t: ";
-String set_t_text = " | set t: ";
+U8GLIB_ST7920_128X64_4X u8g(SCK_DISPLAY, MOSI_DISPLAY, CS_DISPLAY);
 
 
-byte SET_T = 60;
+Display::Display()
+{
+    u8g.setColorIndex(1);
+}
 
 
-void draw_main_page(float temp, int set_temp) {
+void Display::draw_main_page(float temp, int set_temp) {
     String text = current_t_text + int(temp) + set_t_text + set_temp;
 
     const uint8_t len_text = text.length() + 1;
@@ -33,5 +27,3 @@ void draw_main_page(float temp, int set_temp) {
     } while( u8g.nextPage() );
 
 }
-
-#endif //THERMISTOR_DISPLAY_H
