@@ -1,6 +1,7 @@
 #include "Configuration.h"
 #include "Thermostat.h"
 #include "Display.h"
+#include "MyKeypad.h"
 
 // Object for get data from thermistor
 Thermistor thermistor(THERMISTOR_PIN, B, SERIAL_R, THERMISTOR_R, NOMINAL_T, COEF_THERMISTOR);
@@ -21,6 +22,7 @@ void setup()
 
 void loop()
 {
+    Serial.println(get_key());
     thermostat.set_t(SET_T);
     disp.draw_main_page(thermistor.get_t(), SET_T);
 }

@@ -25,11 +25,9 @@ Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pi
     _previous_millis = 0;
 }
 
-
 void Thermostat::set_thermistor(Thermistor thermistor) {
     _thermistor = &thermistor;
 }
-
 
 void Thermostat::_cooling(bool state) {
     unsigned long current_millis = millis();
