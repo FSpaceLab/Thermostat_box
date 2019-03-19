@@ -22,6 +22,9 @@ class Thermostat {
 
         void set_t(int temperature);
         void set_thermistor(Thermistor thermistor);
+        void off_box();
+
+        byte current_state;
 
     private:
         byte _heater_pin, _cooler_pin, _cooler_fan_cold_pin, _cooler_fan_heat_pin;

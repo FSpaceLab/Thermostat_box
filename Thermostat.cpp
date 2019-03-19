@@ -18,7 +18,7 @@ Thermostat::Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pi
     _cooler_fan_cold_pin = cooler_fan_cold_pin;
     _cooler_fan_heat_pin = cooler_fan_heat_pin;
 
-    byte _current_state = 0;
+    byte current_state = 0;
 
     _cooling_interval = cooling_interval;
     _heating_interval = heating_interval;
@@ -37,15 +37,15 @@ void Thermostat::_cooling(bool state) {
         _previous_millis = current_millis;
 
         // Перевірка та встановлення станів
-        if (state && _current_state != COOLING_STATE ) {
-            _current_state = COOLING_STATE;
+        if (state && current_state != COOLING_STATE ) {
+            current_state = COOLING_STATE;
 
             digitalWrite(_cooler_fan_cold_pin, HIGH);
             digitalWrite(_cooler_fan_heat_pin, HIGH);
             digitalWrite(_cooler_pin, HIGH);
         }
-        else if (!state && _current_state == COOLING_STATE){
-            _current_state = OFF_STATE;
+        else if (!state && current_state == COOLING_STATE){
+            current_state = OFF_STATE;
 
             digitalWrite(_cooler_fan_cold_pin, LOW);
             digitalWrite(_cooler_fan_heat_pin, LOW);
@@ -62,13 +62,13 @@ void Thermostat::_heating(bool state) {
         _previous_millis = current_millis;
 
         // Перевірка та встановлення станів
-        if (state && _current_state != HEATING_STATE) {
-            _current_state = HEATING_STATE;
+        if (state && current_state != HEATING_STATE) {
+            current_state = HEATING_STATE;
 
             digitalWrite(_heater_pin, HIGH);
         }
-        else if (!state && _current_state == HEATING_STATE){
-            _current_state = OFF_STATE;
+        else if (!state && current_state == HEATING_STATE){
+            current_state = OFF_STATE;
 
             digitalWrite(_heater_pin, LOW);
         }
@@ -76,12 +76,18 @@ void Thermostat::_heating(bool state) {
 }
 
 
+void Thermostat::off_box() {
+    _cooling(OFF);
+    _heating(OFF);
+    current_state = OFF_STATE;
+}
+
 void Thermostat::set_t(int temperature) {
     int current_t = (int) _thermistor->get_t();
 
     // Ввімкнення охолодження
     if (current_t > temperature) {
-        if (_current_state != HEATING_STATE)
+        if (current_state != HEATING_STATE)
             _cooling(ON);
         else
             _heating(OFF);
@@ -89,7 +95,7 @@ void Thermostat::set_t(int temperature) {
 
     // Ввімкнення нагріву
     else if (current_t < temperature ) {
-        if (_current_state != COOLING_STATE)
+        if (current_state != COOLING_STATE)
             _heating(ON);
         else
             _cooling(OFF);
@@ -98,10 +104,9 @@ void Thermostat::set_t(int temperature) {
 
     // Вимкнення нагріву/охолодження
     else {
-        if (_current_state != OFF_STATE)
-            _heating(OFF);
-
-        else if (_current_state != OFF_STATE)
+        if (current_state != OFF_STATE) {
             _cooling(OFF);
+            _heating(OFF);
+        }
     }
 }

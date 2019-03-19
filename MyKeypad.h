@@ -7,20 +7,15 @@
 
 #include "Arduino.h"
 #include "Keypad.h"
+#include "Configuration.h"
 
 const byte ROWS = 5; //four rows
 const byte COLS = 4; //four columns
 //define the cymbols on the buttons of the keypads
-char hexaKeys[ROWS][COLS] = {
-        {'f', 'F', '#', '*'},
-        {'1', '2', '3', 'u'},
-        {'4', '5', '6', 'd'},
-        {'7', '8', '9', 'e'},
-        {'<', '0', '>', 'E'}
-};
+char hexaKeys[ROWS][COLS] = KEYPAD_MATRIX;
 
-byte rowPins[ROWS] = {30, 32, 34, 36, 38}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {46, 44, 42, 40}; //connect to the column pinouts of the keypad
+byte rowPins[ROWS] = KEYPAD_ROW; //connect to the row pinouts of the keypad
+byte colPins[COLS] = KEYPAD_COLS; //connect to the column pinouts of the keypad
 
 Keypad customKeypad = Keypad( makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
