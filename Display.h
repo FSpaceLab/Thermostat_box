@@ -15,11 +15,12 @@ class Display {
         Display();
 
         // methods
-        void draw_main_page(float temp, int set_temp);
-        void draw_set_t(byte moving, bool state, byte temperature);
-
+        void draw_main_page(float temp, bool state, int set_temp, byte process);
+        void draw_set_t(bool state, byte temperature);
+        void update_current_position(bool update);
         // attributes
         byte cur_pos_set_t = 0;
+        byte max_len = 2;
 
     private:
 
@@ -27,23 +28,22 @@ class Display {
         String current_t_text = "cur. t: ";
         String degrees_by_C = " C";
 
-        String set_t_text = " | set t: ";
+        String set_t_text = "set t: ";
 
-        String off_state = "Off";
-        String on_state = "On";
+        const char * cooling_state = "cooling";
+        const char * heating_state = "heating";
 
-        String temp_text = " ";
-        char *char_temp_text;
+        const char *off_state = "Off";
+        const char *on_state = "On";
 
-        int len_text;
-        char *char_text;
+        const char *l_arrow = "<";
+        const char *r_arrow = ">";
 
-        byte up_side_x_selection = 8;
-        byte up_side_y_selection = 0;
+        byte full_width = 128;
+        byte full_heigth = 64;
 
-        byte height_selection = 16;
-        byte width_selection = 128;
-
+        byte arrow_l_x = 3;
+        byte arrow_r_x = 120;
 };
 
 
