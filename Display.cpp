@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "Display.h"
 #include "U8glib.h"
 

@@ -49,13 +49,25 @@
 
 
 /************** DISPLAY CONFIGURATION *************/
-#define MOVING_CURSOR_UP 0
-#define MOVING_CURSOR_DOWN 1
+#define MOVE_CURSOR_UP 0
+#define MOVE_CURSOR_DOWN 1
 /**************************************************/
 
 
 /************** KEYPAD CONFIGURATION **************/
 #define KEYPAD_MATRIX {{'f', 'F', '#', '*'},{'1', '2', '3', 'u'},{'4', '5', '6', 'd'},{'7', '8', '9', 'e'},{'<', '0', '>', 'E'}}
+/**************************************************/
+
+
+/************** EEPROM CONFIGURATION **************/
+#define TEMP_STATE_ADDR 0
+#define TEMP_SET_ADDR 2
+#define CO2_STATE_ADDR 3
+#define CO2_SET_ADDR 5
+#define LIGHT_STATE_ADDR 6
+#define LIGHT_R_ADDR 8
+#define LIGHT_G_ADDR 10
+#define LIGHT_B_ADDR 12
 /**************************************************/
 
 
