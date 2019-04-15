@@ -310,22 +310,47 @@ void loop() {
     }
 
 
+
     /******** Send data to server ********/
-    Serial.print("key=");
-    Serial.println(key);
-
-    Serial.print("temp=");
-    Serial.print(thermistor.get_t());
-    Serial.print("; ");
-
-    Serial.print("co2=");
-    Serial.print(0);
-    Serial.print("; ");
-
-    Serial.print("on=");
+    Serial.print("thermostat=");
     Serial.print(THERMOSTAT_STATE);
     Serial.print("; ");
 
     Serial.print("current_state=");
     Serial.println(thermostat.current_state);
+
+    // Themperature
+    Serial.print("t=");
+    Serial.print(thermistor.get_t());
+    Serial.print("; ");
+
+    Serial.print("set_t=");
+    Serial.print(SET_T);
+    Serial.print("; ");
+
+    // CO2
+    Serial.print("co2=");
+    Serial.print(0);
+    Serial.print("; ");
+
+    Serial.print("set_co2=");
+    Serial.print(0);
+    Serial.print("; ");
+
+    // Light
+    Serial.print("l=");
+    Serial.print(LIGHT_STATE);
+    Serial.print("; ");
+
+    Serial.print("l_R=");
+    Serial.print(SET_LIGHT_R);
+    Serial.print("; ");
+
+    Serial.print("l_G=");
+    Serial.print(SET_LIGHT_G);
+    Serial.print("; ");
+
+    Serial.print("l_B=");
+    Serial.print(SET_LIGHT_B);
+    Serial.print("; ");
 }
