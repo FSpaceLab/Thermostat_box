@@ -62,7 +62,7 @@ void Display::draw_main_page(float temp, bool state, int set_temp, byte process)
 }
 
 
-void Display::update_current_position(bool update) {
+void Display::update_current_position(bool update, byte max_len) {
     // if update == 0, sub 1; if update == 1, add 1
     if (update) {
         if (max_len - 1 - cur_pos_set_t)
@@ -84,6 +84,7 @@ void Display::draw_set_t(bool state, byte temperature) {
 
     char buf[3];
     const char *menu_strings[] = {state ? on_state : off_state, itoa(temperature, buf, 10)};
+//    const char *menu_strings[] = {"Thermostat: " + state ? on_state : off_state, "t: " + itoa(temperature, buf, 10)};
 
     uint8_t i, height_elem;
     u8g_uint_t center_elem;
@@ -96,7 +97,7 @@ void Display::draw_set_t(bool state, byte temperature) {
     u8g.firstPage();
     do {
 
-        for( i = 0; i < max_len; i++ ) {
+        for( i = 0; i < max_len_t; i++ ) {
             center_elem = (full_width-u8g.getStrWidth(menu_strings[i]))/2;
             u8g.setDefaultForegroundColor();
             if ( i == cur_pos_set_t ) {
@@ -110,3 +111,47 @@ void Display::draw_set_t(bool state, byte temperature) {
         }
     } while( u8g.nextPage() );
 }
+
+void Display::draw_set_light(bool state, byte _R, byte _G, byte _B) {
+
+    char buf_R[3];
+    char buf_G[3];
+    char buf_B[3];
+    const char *menu_strings[] = {state ? on_state : off_state,
+                                  itoa(_R, buf_R, 10),
+                                  itoa(_G, buf_G, 10),
+                                  itoa(_B, buf_B, 10),};
+//    const char *menu_strings[] = {"Light: " + state ? on_state : off_state,
+//                                  "R: " + itoa(_R, buf_R, 10),
+//                                  "G: " + itoa(_G, buf_G, 10),
+//                                  "B: " + itoa(_B, buf_B, 10),};
+
+    uint8_t i, height_elem;
+    u8g_uint_t center_elem;
+
+    u8g.setFontRefHeightText();
+    u8g.setFontPosTop();
+
+    height_elem = u8g.getFontAscent()-u8g.getFontDescent()+3;
+
+    u8g.firstPage();
+    do {
+
+        for( i = 0; i < max_len_light; i++ ) {
+            center_elem = (full_width-u8g.getStrWidth(menu_strings[i]))/2;
+            u8g.setDefaultForegroundColor();
+            if ( i == cur_pos_set_t ) {
+                u8g.drawBox(0, i*height_elem+2, full_width, height_elem+2);
+                u8g.setDefaultBackgroundColor();
+                u8g.drawStr( arrow_l_x, i*height_elem+5, l_arrow);
+                u8g.drawStr( arrow_r_x, i*height_elem+5, r_arrow);
+            }
+
+            u8g.drawStr(center_elem, i*height_elem+5, menu_strings[i]);
+        }
+    } while( u8g.nextPage() );
+}
+
+
+
+

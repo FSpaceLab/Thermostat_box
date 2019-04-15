@@ -17,7 +17,7 @@
 #define HEATER_PIN 7
 
 // DISPLAY
-#define SCK_DISPLAY 13
+#define SCK_DISPLAY 12
 #define MOSI_DISPLAY 11
 #define CS_DISPLAY 10
 
@@ -25,9 +25,12 @@
 #define KEYPAD_ROW {30, 32, 34, 36, 38}
 #define KEYPAD_COLS {46, 44, 42, 40}
 
+// LIGHT
+#define PIN_R 49
+#define PIN_G 51
+#define PIN_B 53
+
 /***************************************************/
-
-
 
 /************ THERMISTORS CONFIGURATION ************/
 // COEFFICIENTS
@@ -45,6 +48,11 @@
 
 #define MAX_TEMP 60
 #define MIN_TEMP 5
+/**************************************************/
+
+
+/*************** LIGHT CONFIGURATION **************/
+
 /**************************************************/
 
 
