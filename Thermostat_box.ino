@@ -102,7 +102,7 @@ void loop() {
         THERMOSTAT_STATE = Serial.parseInt();
         TEMP_THERMOSTAT_STATE = THERMOSTAT_STATE;
 
-        SET_T = Serial.parseInt();/
+        SET_T = Serial.parseInt();
         TEMP_SET_T = SET_T;
 
 //        // do it again:
