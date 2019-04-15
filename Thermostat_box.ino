@@ -100,16 +100,26 @@ void loop() {
 
         // look for the next valid integer in the incoming serial stream:
         THERMOSTAT_STATE = Serial.parseInt();
-        SET_T = Serial.parseInt();
+        TEMP_THERMOSTAT_STATE = THERMOSTAT_STATE;
+
+        SET_T = Serial.parseInt();/
+        TEMP_SET_T = SET_T;
 
 //        // do it again:
 //        CO2_STATE = Serial.parseInt();
 //        SET_CO2 = Serial.parseInt();
 
         LIGHT_STATE = Serial.parseInt();
+        TEMP_LIGHT_STATE = LIGHT_STATE;
+
         SET_LIGHT_R = Serial.parseInt();
+        TEMP_SET_LIGHT_R = SET_LIGHT_R;
+
         SET_LIGHT_G = Serial.parseInt();
+        TEMP_SET_LIGHT_G = SET_LIGHT_G;
+
         SET_LIGHT_B = Serial.parseInt();
+        TEMP_SET_LIGHT_B = SET_LIGHT_B;
 
         int pass = Serial.parseInt();
     }
