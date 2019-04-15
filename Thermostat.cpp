@@ -79,7 +79,6 @@ void Thermostat::_heating(bool state) {
 void Thermostat::off_box() {
     _cooling(OFF);
     _heating(OFF);
-    current_state = OFF_STATE;
 }
 
 void Thermostat::set_t(int temperature) {

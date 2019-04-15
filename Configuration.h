@@ -17,7 +17,7 @@
 #define HEATER_PIN 7
 
 // DISPLAY
-#define SCK_DISPLAY 13
+#define SCK_DISPLAY 12
 #define MOSI_DISPLAY 11
 #define CS_DISPLAY 10
 
@@ -25,9 +25,12 @@
 #define KEYPAD_ROW {30, 32, 34, 36, 38}
 #define KEYPAD_COLS {46, 44, 42, 40}
 
+// LIGHT
+#define PIN_R 49
+#define PIN_G 51
+#define PIN_B 53
+
 /***************************************************/
-
-
 
 /************ THERMISTORS CONFIGURATION ************/
 // COEFFICIENTS
@@ -48,14 +51,31 @@
 /**************************************************/
 
 
+/*************** LIGHT CONFIGURATION **************/
+
+/**************************************************/
+
+
 /************** DISPLAY CONFIGURATION *************/
-#define MOVING_CURSOR_UP 0
-#define MOVING_CURSOR_DOWN 1
+#define MOVE_CURSOR_UP 0
+#define MOVE_CURSOR_DOWN 1
 /**************************************************/
 
 
 /************** KEYPAD CONFIGURATION **************/
 #define KEYPAD_MATRIX {{'f', 'F', '#', '*'},{'1', '2', '3', 'u'},{'4', '5', '6', 'd'},{'7', '8', '9', 'e'},{'<', '0', '>', 'E'}}
+/**************************************************/
+
+
+/************** EEPROM CONFIGURATION **************/
+#define TEMP_STATE_ADDR 0
+#define TEMP_SET_ADDR 2
+#define CO2_STATE_ADDR 3
+#define CO2_SET_ADDR 5
+#define LIGHT_STATE_ADDR 6
+#define LIGHT_R_ADDR 8
+#define LIGHT_G_ADDR 10
+#define LIGHT_B_ADDR 12
 /**************************************************/
 
 

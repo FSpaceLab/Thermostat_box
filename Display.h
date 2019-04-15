@@ -17,10 +17,15 @@ class Display {
         // methods
         void draw_main_page(float temp, bool state, int set_temp, byte process);
         void draw_set_t(bool state, byte temperature);
-        void update_current_position(bool update);
+        void draw_set_light(bool state, byte _R, byte _G, byte _B);
+        void draw_set_co2(bool state, byte co2);
+        void update_current_position(bool update, byte max_len);
         // attributes
         byte cur_pos_set_t = 0;
-        byte max_len = 2;
+        byte max_len_t = 2;
+        byte max_len_light = 4;
+        byte max_len_co2 = 2;
+        byte cursor = 0;
 
     private:
 
