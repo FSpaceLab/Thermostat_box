@@ -57,6 +57,10 @@ bool set_co2_menu = false;
 
 int keypad_value = 0;
 
+unsigned long previous_millis = 0;
+int serial_interval = 5000;
+
+
 /********************************/
 
 void setup()
@@ -101,9 +105,11 @@ void loop() {
         // look for the next valid integer in the incoming serial stream:
         THERMOSTAT_STATE = Serial.parseInt();
         TEMP_THERMOSTAT_STATE = THERMOSTAT_STATE;
+        saved_data.write(TEMP_STATE_ADDR, THERMOSTAT_STATE);
 
         SET_T = Serial.parseInt();
         TEMP_SET_T = SET_T;
+        saved_data.write(TEMP_SET_ADDR, SET_T);
 
 //        // do it again:
 //        CO2_STATE = Serial.parseInt();
@@ -111,15 +117,19 @@ void loop() {
 
         LIGHT_STATE = Serial.parseInt();
         TEMP_LIGHT_STATE = LIGHT_STATE;
+        saved_data.write(LIGHT_STATE_ADDR, LIGHT_STATE);
 
         SET_LIGHT_R = Serial.parseInt();
         TEMP_SET_LIGHT_R = SET_LIGHT_R;
+        saved_data.write(LIGHT_R_ADDR, SET_LIGHT_R);
 
         SET_LIGHT_G = Serial.parseInt();
         TEMP_SET_LIGHT_G = SET_LIGHT_G;
+        saved_data.write(LIGHT_G_ADDR, SET_LIGHT_G);
 
         SET_LIGHT_B = Serial.parseInt();
         TEMP_SET_LIGHT_B = SET_LIGHT_B;
+        saved_data.write(LIGHT_B_ADDR, SET_LIGHT_B);
 
         int pass = Serial.parseInt();
     }
@@ -322,45 +332,46 @@ void loop() {
 
 
     /******** Send data to server ********/
-    Serial.print("thermostat=");
-    Serial.print(THERMOSTAT_STATE);
-    Serial.print("; ");
 
-    Serial.print("current_state=");
-    Serial.println(thermostat.current_state);
+    unsigned long current_millis = millis();
 
-    // Themperature
-    Serial.print("t=");
-    Serial.print(thermistor.get_t());
-    Serial.print("; ");
+    // Мінімальний час роботи нагрівача = heating_interval
+    if (current_millis - previous_millis >= serial_interval ) {
 
-    Serial.print("set_t=");
-    Serial.print(SET_T);
-    Serial.print("; ");
+        previous_millis = current_millis;
 
-    // CO2
-    Serial.print("co2=");
-    Serial.print(0);
-    Serial.print("; ");
+        Serial.print(THERMOSTAT_STATE);
+        Serial.print("; ");
 
-    Serial.print("set_co2=");
-    Serial.print(0);
-    Serial.print("; ");
+        Serial.print(thermostat.current_state);
+        Serial.print("; ");
 
-    // Light
-    Serial.print("l=");
-    Serial.print(LIGHT_STATE);
-    Serial.print("; ");
+        // Themperature
+        Serial.print(thermistor.get_t());
+        Serial.print("; ");
 
-    Serial.print("l_R=");
-    Serial.print(SET_LIGHT_R);
-    Serial.print("; ");
+        Serial.print(SET_T);
+        Serial.print("; ");
 
-    Serial.print("l_G=");
-    Serial.print(SET_LIGHT_G);
-    Serial.print("; ");
+        // CO2
+        Serial.print(0);
+        Serial.print("; ");
 
-    Serial.print("l_B=");
-    Serial.print(SET_LIGHT_B);
-    Serial.print("; ");
+        Serial.print(0);
+        Serial.print("; ");
+
+        // Light
+        Serial.print(LIGHT_STATE);
+        Serial.print("; ");
+
+        Serial.print(SET_LIGHT_R);
+        Serial.print("; ");
+
+        Serial.print(SET_LIGHT_G);
+        Serial.print("; ");
+
+        Serial.print(SET_LIGHT_B);
+        Serial.println("; ");
+    }
+
 }
