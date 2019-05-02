@@ -11,13 +11,13 @@
 #define THERMISTOR_PIN A0
 
 // THERMOSTAT
-#define COOLER_FAN_COLD_PIN 4
-#define COOLER_FAN_HEAT_PIN 3
-#define COOLER_PIN 6
-#define HEATER_PIN 7
+#define COOLER_FAN_COLD_PIN 6
+#define COOLER_FAN_HEAT_PIN 5
+#define COOLER_PIN A10
+#define HEATER_PIN A9
 
 // DISPLAY
-#define SCK_DISPLAY 12
+#define SCK_DISPLAY 13
 #define MOSI_DISPLAY 11
 #define CS_DISPLAY 10
 
@@ -26,9 +26,9 @@
 #define KEYPAD_COLS {46, 44, 42, 40}
 
 // LIGHT
-#define PIN_R 49
-#define PIN_G 51
-#define PIN_B 53
+#define PIN_R 2
+#define PIN_G 3
+#define PIN_B 4
 
 /***************************************************/
 
