@@ -1,15 +1,23 @@
+
 #include "Configuration.h"
 #include "Thermostat.h"
 #include "Display.h"
 #include "MyKeypad.h"
 #include "SD_EEPROM.h"
 #include "Light.h"
+#include "DHT.h"
+
+
+// DHT dht(DHTPIN, DHTTYPE);
 
 // Object for get data from thermistor
 Thermistor thermistor(THERMISTOR_PIN, B, SERIAL_R, THERMISTOR_R, NOMINAL_T, COEF_THERMISTOR);
+Thermistor thermistor_hotbed(THERMISTOR_HOTBED_PIN, B, SERIAL_R, THERMISTOR_HOTBED_R, NOMINAL_T, COEF_THERMISTOR);
+//Thermistor thermistor(DHT_PIN, DHTTYPE);
 
 // Object for manage thermostat. Setting temperature in box
-Thermostat thermostat(HEATER_PIN, COOLER_PIN, COOLER_FAN_COLD_PIN, COOLER_FAN_HEAT_PIN,
+Thermostat thermostat(HEATER_PIN, COOLER_PIN, COOLER_FAN_COLD_PIN,
+                      COOLER_FAN_HEAT_PIN, COOLER_FAN_INSIDE,
                       COOLING_INTERVAL, HEATING_INTERVAL);
 
 // Object for manage display
@@ -19,7 +27,7 @@ Display display;
 SD_EEPROM saved_data;
 
 // Object for manage light
-Light light(PIN_R, PIN_G, PIN_B);
+Light light(PIN_UV, PIN_R, PIN_G, PIN_B);
 
 
 /********** BUFFERS **************/
@@ -67,6 +75,7 @@ void setup()
 {
     Serial.begin(9600);
     thermostat.set_thermistor(thermistor);
+    thermostat.set_hotbed_thermistor(thermistor_hotbed);
 
     /******** RESTORE DATA FROM EEPROM ********/
     // Temperature restore
@@ -136,8 +145,10 @@ void loop() {
 
 
     // Modules manage
-    if (THERMOSTAT_STATE)
+    if (THERMOSTAT_STATE) {
         thermostat.set_t(SET_T);
+        LAST_STATE = thermostat.current_state;
+    }
     else
         thermostat.off_box();
 
@@ -150,12 +161,13 @@ void loop() {
     /******** Working with keypad and display ********/
     if (set_t_menu)
         display.draw_set_t(TEMP_THERMOSTAT_STATE, TEMP_SET_T);
-  
+
     else if (set_light_menu)
         display.draw_set_light(TEMP_LIGHT_STATE, TEMP_SET_LIGHT_R, TEMP_SET_LIGHT_G, TEMP_SET_LIGHT_B);
 
     else
-        display.draw_main_page(thermistor.get_t(), THERMOSTAT_STATE, SET_T, thermostat.current_state);
+        // display.draw_main_page(thermostat.current_t, THERMOSTAT_STATE, SET_T, thermostat.current_state);
+       display.draw_main_page(thermistor.get_t(), THERMOSTAT_STATE, SET_T, thermostat.current_state);
 
 
     char key = get_key();
@@ -347,7 +359,7 @@ void loop() {
         Serial.print("; ");
 
         // Themperature
-        Serial.print(thermistor.get_t());
+        Serial.print(thermostat.current_t);
         Serial.print("; ");
 
         Serial.print(SET_T);

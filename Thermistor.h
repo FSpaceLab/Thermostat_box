@@ -20,6 +20,8 @@ class Thermistor {
         float get_t();
 
     private:
+        float _mediana(float data);
+
         byte _pin;
         int _b, _serial_r, _nominal_t;
         unsigned long _thermistor_r;
