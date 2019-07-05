@@ -53,7 +53,7 @@
 
 /************ THERMOSTAT CONFIGURATION ************/
 #define COOLING_INTERVAL 5000
-#define HEATING_INTERVAL 5000
+#define HEATING_INTERVAL 2000
 
 #define MAX_TEMP 60
 #define MIN_TEMP 5

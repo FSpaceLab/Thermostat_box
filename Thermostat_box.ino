@@ -127,9 +127,13 @@ void loop() {
         TEMP_SET_T = SET_T;
         saved_data.write(TEMP_SET_ADDR, SET_T);
 
-//        // do it again:
-//        CO2_STATE = Serial.parseInt();
-//        SET_CO2 = Serial.parseInt();
+        CO2_STATE = Serial.parseInt();
+        TEMP_CO2_STATE = CO2_STATE;
+        saved_data.write(CO2_STATE_ADDR, CO2_STATE);
+
+        SET_CO2 = Serial.parseInt();
+        TEMP_SET_CO2 = SET_CO2;
+        saved_data.write(CO2_SET_ADDR, SET_CO2);
 
         LIGHT_STATE = Serial.parseInt();
         TEMP_LIGHT_STATE = LIGHT_STATE;
@@ -176,7 +180,6 @@ void loop() {
         display.draw_set_light(TEMP_LIGHT_STATE, TEMP_SET_LIGHT_UV, TEMP_SET_LIGHT_R, TEMP_SET_LIGHT_G, TEMP_SET_LIGHT_B);
 
     else
-        // display.draw_main_page(thermostat.current_t, THERMOSTAT_STATE, SET_T, thermostat.current_state);
        display.draw_main_page(thermistor.get_t(), THERMOSTAT_STATE, SET_T, thermostat.current_state);
 
 
@@ -390,7 +393,7 @@ void loop() {
         Serial.print("; ");
 
         // Themperature
-        Serial.print(thermostat.current_t);
+        Serial.print(thermistor.get_t());
         Serial.print("; ");
 
         Serial.print(SET_T);
