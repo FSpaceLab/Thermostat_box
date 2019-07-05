@@ -60,13 +60,16 @@
 
 #define MAX_TEMP_HOTBED 100
 
-#define TOLERANCE_HEATING 0.1
+#define TOLERANCE_TEMPERATURE 1
+#define TOLERANCE_HEATING 0.05
 #define TOLERANCE_COOLING 0.03
 /**************************************************/
 
 
 /*************** LIGHT CONFIGURATION **************/
-
+#define RGB_STATE 2
+#define UV_STATE 1
+#define OFF 0
 /**************************************************/
 
 
@@ -90,6 +93,7 @@
 #define LIGHT_R_ADDR 8
 #define LIGHT_G_ADDR 10
 #define LIGHT_B_ADDR 12
+#define LIGHT_UV_ADDR 14
 /**************************************************/
 
 

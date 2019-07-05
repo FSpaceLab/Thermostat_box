@@ -8,6 +8,7 @@ U8GLIB_ST7920_128X64_4X u8g(SCK_DISPLAY, MOSI_DISPLAY, CS_DISPLAY);
 Display::Display()
 {
     u8g.setColorIndex(1);
+    Serial.begin(9600);
 }
 
 
@@ -112,19 +113,20 @@ void Display::draw_set_t(bool state, byte temperature) {
     } while( u8g.nextPage() );
 }
 
-void Display::draw_set_light(bool state, byte _R, byte _G, byte _B) {
+void Display::draw_set_light(byte state, byte _UV, byte _R, byte _G, byte _B) {
 
+    char buf_UV[4];
     char buf_R[3];
     char buf_G[3];
     char buf_B[3];
-    const char *menu_strings[] = {state ? on_state : off_state,
+    Serial.println(itoa(_UV, buf_UV, 10));
+
+    const char *menu_strings[] = {state ? (state == UV_STATE ?   uv_state : rgb_state) : off_state,
+                                  itoa(_UV, buf_UV, 10),
                                   itoa(_R, buf_R, 10),
                                   itoa(_G, buf_G, 10),
-                                  itoa(_B, buf_B, 10),};
-//    const char *menu_strings[] = {"Light: " + state ? on_state : off_state,
-//                                  "R: " + itoa(_R, buf_R, 10),
-//                                  "G: " + itoa(_G, buf_G, 10),
-//                                  "B: " + itoa(_B, buf_B, 10),};
+                                  itoa(_B, buf_B, 10)};
+
 
     uint8_t i, height_elem;
     u8g_uint_t center_elem;
@@ -148,10 +150,23 @@ void Display::draw_set_light(bool state, byte _R, byte _G, byte _B) {
             }
 
             u8g.drawStr(center_elem, i*height_elem+5, menu_strings[i]);
+
+            // Black magic of the Mordor
+            u8g.drawStr(text_x, i*height_elem+5, (
+                i ? (i==1 ?
+                    uv_text
+                    : (i == 2 ?
+                        r_text
+                        : (i == 3 ?
+                            g_text
+                            : b_text
+                          )
+                      )
+                    )
+                : blank_text
+              )
+            );
         }
+
     } while( u8g.nextPage() );
 }
-
-
-
-

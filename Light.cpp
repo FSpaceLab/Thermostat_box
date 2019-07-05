@@ -16,23 +16,25 @@ Light::Light(byte pin_UV, byte pin_R, byte pin_G, byte pin_B) {
     pinMode(_pin_B, OUTPUT);
 }
 
-void Light::on(bool state, byte level_R, byte level_G, byte level_B) {
-    if (state) {
-        current_state = 1;
-        analogWrite(_pin_UV, HIGH);
-    } else {
-        current_state = 2;
+void Light::on(byte state, byte level_UV, byte level_R, byte level_G, byte level_B) {
+    if (state == UV_STATE) {
+        current_state = UV_STATE; {
+            analogWrite(_pin_R, LOW);
+            analogWrite(_pin_G, LOW);
+            analogWrite(_pin_B, LOW);
+            analogWrite(_pin_UV, level_UV);
+        }
+    } else if (state == RGB_STATE) {
+        current_state = RGB_STATE;
+        analogWrite(_pin_UV, LOW);
         analogWrite(_pin_R, level_R);
         analogWrite(_pin_G, level_G);
         analogWrite(_pin_B, level_B);
     }
-
-
-
 }
 
 void Light::off() {
-    current_state = 0;
+    current_state = OFF;
     analogWrite(_pin_UV, LOW);
     analogWrite(_pin_R, LOW);
     analogWrite(_pin_G, LOW);
