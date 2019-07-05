@@ -6,16 +6,17 @@
 #define THERMOSTAT_BOX_LIGHT_H
 
 #include "Arduino.h"
+#include "Configuration.h"
 
 class Light {
     public:
-        Light(byte pin_R, byte pin_G, byte pin_B);
-        void on(byte level_R, byte level_G, byte level_B);
+        Light(byte pin_UV, byte pin_R, byte pin_G, byte pin_B);
+        void on(byte state, byte level_UV=0, byte level_R=0, byte level_G=0, byte level_B=0);
         void off();
-        bool current_state = false;
+        byte current_state = 0;
 
     private:
-        byte _pin_R, _pin_G, _pin_B;
+        byte _pin_UV, _pin_R, _pin_G, _pin_B;
 
 };
 

@@ -115,23 +115,28 @@ void Thermostat::set_t(int temperature) {
     else
         current_t = floor(_thermistor->get_t() + 0.5);
 
-    // Ввімкнення охолодження
-    // Розрахунок допустимого відхилення від виставленої температури
-    if (current_t > temperature) {
-        if (current_state != HEATING_STATE)
-            _cooling(ON);
-        else
-            _heating(OFF);
-    }
+    float _t = _hotbed_thermistor->get_t();
 
-    // Ввімкнення нагріву
-    // Розрахунок допустимого відхилення від виставленої температури
-    else if (current_t < temperature ) {
-        if (current_state != COOLING_STATE)
-            _heating(ON);
-        else
+
+    if (current_t < temperature ) {   // Ввімкнення нагріву
+        if (current_state == COOLING_STATE)
             _cooling(OFF);
 
+        // Розрахунок вимкнення нагріву через інерційність нагрівального елем.
+        if ( ((_t - temperature) >= current_t) &&
+             (current_t - current_t * TOLERANCE_HEATING) )
+            _heating(OFF);
+        else
+            _heating(ON);
+    }
+
+    else if (current_t > temperature) {   // Ввімкнення охолодження
+        if (current_state != HEATING_STATE)
+            _heating(OFF);
+
+        if (!((temperature - current_t) >= TOLERANCE_TEMPERATURE &&
+               last_state == HEATING_STATE))
+            _cooling(ON);
     }
 
     // Вимкнення нагріву/охолодження
