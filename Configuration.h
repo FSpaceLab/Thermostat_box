@@ -63,6 +63,8 @@
 #define TOLERANCE_TEMPERATURE 1
 #define TOLERANCE_HEATING 0.05
 #define TOLERANCE_COOLING 0.03
+
+#define TEMPERATURE_CORRECTION 1.35   // Degree by Celsius
 /**************************************************/
 
 

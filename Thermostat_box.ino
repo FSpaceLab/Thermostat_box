@@ -180,7 +180,7 @@ void loop() {
         display.draw_set_light(TEMP_LIGHT_STATE, TEMP_SET_LIGHT_UV, TEMP_SET_LIGHT_R, TEMP_SET_LIGHT_G, TEMP_SET_LIGHT_B);
 
     else
-       display.draw_main_page(thermistor.get_t(), THERMOSTAT_STATE, SET_T, thermostat.current_state);
+       display.draw_main_page(thermistor.get_t() + TEMPERATURE_CORRECTION, THERMOSTAT_STATE, SET_T, thermostat.current_state);
 
 
     char key = get_key();
@@ -393,7 +393,7 @@ void loop() {
         Serial.print("; ");
 
         // Themperature
-        Serial.print(thermistor.get_t());
+        Serial.print(thermistor.get_t() + TEMPERATURE_CORRECTION);
         Serial.print("; ");
 
         Serial.print(SET_T);

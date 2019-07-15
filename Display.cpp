@@ -83,7 +83,7 @@ void Display::update_current_position(bool update, byte max_len) {
 
 void Display::draw_set_t(bool state, byte temperature) {
 
-    char buf[3];
+    char buf[4];
     const char *menu_strings[] = {state ? on_state : off_state, itoa(temperature, buf, 10)};
 //    const char *menu_strings[] = {"Thermostat: " + state ? on_state : off_state, "t: " + itoa(temperature, buf, 10)};
 
@@ -116,10 +116,9 @@ void Display::draw_set_t(bool state, byte temperature) {
 void Display::draw_set_light(byte state, byte _UV, byte _R, byte _G, byte _B) {
 
     char buf_UV[4];
-    char buf_R[3];
-    char buf_G[3];
-    char buf_B[3];
-    Serial.println(itoa(_UV, buf_UV, 10));
+    char buf_R[4];
+    char buf_G[4];
+    char buf_B[4];
 
     const char *menu_strings[] = {state ? (state == UV_STATE ?   uv_state : rgb_state) : off_state,
                                   itoa(_UV, buf_UV, 10),

@@ -113,7 +113,7 @@ void Thermostat::set_t(int temperature) {
     if (_setted_dht)
         current_t = _dht->readTemperature();
     else
-        current_t = floor(_thermistor->get_t());
+        current_t = floor(_thermistor->get_t() + TEMPERATURE_CORRECTION);
 
     // Ввімкнення охолодження
     // Розрахунок допустимого відхилення від виставленої температури
