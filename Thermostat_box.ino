@@ -295,7 +295,7 @@ void loop() {
                     TEMP_LIGHT_STATE = OFF;
 
                 else if (TEMP_LIGHT_STATE == OFF && key == '<')
-                    TEMP_LIGHT_STATE = RGB_STATE;
+                    TEMP_LIGHT_STATE = RGB_UV_STATE;
 
                 else if (key == '>')
                     TEMP_LIGHT_STATE++;

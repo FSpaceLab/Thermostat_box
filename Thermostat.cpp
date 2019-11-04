@@ -69,6 +69,12 @@ void Thermostat::_cooling(bool state) {
             digitalWrite(_cooler_pin, LOW);
         }
     }
+    if (state == OFF) {
+        digitalWrite(_cooler_fan_cold_pin, LOW);
+        digitalWrite(_cooler_fan_heat_pin, LOW);
+        digitalWrite(_inside_fan_cooler, LOW);
+        digitalWrite(_cooler_pin, LOW);
+    }
 }
 
 
