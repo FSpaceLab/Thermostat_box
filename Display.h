@@ -42,6 +42,7 @@ class Display {
         const char *on_state = "On";
         const char *rgb_state = "RGB On";
         const char *uv_state = "UV On";
+        const char *rgb_uv_state = "Both light On";
 
         const char *blank_text = "";
         const char *uv_text = "UV:";

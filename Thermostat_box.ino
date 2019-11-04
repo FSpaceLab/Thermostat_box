@@ -291,7 +291,7 @@ void loop() {
 
             // choice of type of lighting
             else if (set_light_menu) {
-                if (TEMP_LIGHT_STATE == RGB_STATE && key == '>')
+                if (TEMP_LIGHT_STATE == RGB_UV_STATE && key == '>')
                     TEMP_LIGHT_STATE = OFF;
 
                 else if (TEMP_LIGHT_STATE == OFF && key == '<')

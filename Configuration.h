@@ -69,6 +69,7 @@
 
 
 /*************** LIGHT CONFIGURATION **************/
+#define RGB_UV_STATE 3
 #define RGB_STATE 2
 #define UV_STATE 1
 #define OFF 0

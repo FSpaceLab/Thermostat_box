@@ -120,7 +120,9 @@ void Display::draw_set_light(byte state, byte _UV, byte _R, byte _G, byte _B) {
     char buf_G[4];
     char buf_B[4];
 
-    const char *menu_strings[] = {state ? (state == UV_STATE ?   uv_state : rgb_state) : off_state,
+    const char *menu_strings[] = {state ?
+                                    (state == UV_STATE ? uv_state : state == RGB_STATE ? rgb_state : rgb_uv_state)
+                                  : off_state,
                                   itoa(_UV, buf_UV, 10),
                                   itoa(_R, buf_R, 10),
                                   itoa(_G, buf_G, 10),
