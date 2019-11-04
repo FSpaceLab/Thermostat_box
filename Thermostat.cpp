@@ -27,6 +27,12 @@ Thermostat::Thermostat(byte heater_pin, byte cooler_pin,
     _cooling_interval = cooling_interval;
     _heating_interval = heating_interval;
     _previous_millis = 0;
+
+    // PID Settings
+    windowStartTime = millis();
+    Setpoint = 100;
+    PID_Heating.SetOutputLimits(0, WindowSize);
+    PID_Heating.SetMode(AUTOMATIC);
 }
 
 
@@ -123,30 +129,45 @@ void Thermostat::set_t(int temperature) {
 
     // Ввімкнення охолодження
     // Розрахунок допустимого відхилення від виставленої температури
-    if (current_t > temperature) {
-        if (current_state != HEATING_STATE)
-            _cooling(ON);
-        else
-            _heating(OFF);
-    }
+//    if (current_t > temperature) {
+//        if (current_state != HEATING_STATE)
+//            _cooling(ON);
+//        else
+//            _heating(OFF);
+//    }
 
     // Ввімкнення нагріву
     // Розрахунок допустимого відхилення від виставленої температури
-    else if (current_t < temperature ) {
-        if (current_state != COOLING_STATE)
-            _heating(ON);
-        else
-            _cooling(OFF);
+//    else if (current_t < temperature ) {
+//        if (current_state != COOLING_STATE) {
 
-    }
+//        }
+//        else
+//            _cooling(OFF);
+//    }
 
     // Вимкнення нагріву/охолодження
-    else {
-        if (current_state != OFF_STATE) {
-            _cooling(OFF);
-            _heating(OFF);
-        }
-    }
+//    else {
+//        if (current_state != OFF_STATE) {
+//            _cooling(OFF);
+//            _heating(OFF);
+//        }
+//    }
+
+    Input = current_t;
+    PID_Heating.Compute()
+
+    if (millis() - windowStartTime > WindowSize)
+        windowStartTime += WindowSize;
+
+
+    if (Output < millis() - windowStartTime)
+        _heating(ON);
+    else
+        _heating(OFF);
+
+
+
 
     last_state = current_state;
 }

@@ -9,6 +9,7 @@
 #include "Thermistor.h"
 #include "DHT.h"
 #include "Configuration.h"
+#include "PID_v1.h"
 
 
 #define ON 1
@@ -22,7 +23,7 @@ class Thermostat {
     public:
         Thermostat(byte heater_pin, byte cooler_pin, byte cooler_fan_cold_pin,
                    byte cooler_fan_heat_pin, byte inside_fan_cooler,
-                   long cooling_interval=60000, long heating_interval=15000);
+                   long cooling_interval=60000, long heating_interval=0);
 
         void set_t(int temperature);
 
@@ -53,6 +54,14 @@ class Thermostat {
         DHT *_dht;
         bool _setted_dht = 0;
 
+        // For PID controller
+        double Setpoint, Input, Output;
+        double Kp=2, Ki=5, Kd=1;
+
+        int WindowSize = 5000;
+        unsigned long windowStartTime;
+
+        PID PID_Heating(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 };
 
 
